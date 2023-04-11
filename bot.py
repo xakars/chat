@@ -1,29 +1,27 @@
 from dotenv import load_dotenv
 import os
+from telegram.ext import Updater, CallbackContext, CommandHandler, MessageHandler, Filters
 from telegram import Update
-from telegram.ext import ApplicationBuilder, ContextTypes, CommandHandler, MessageHandler, filters
 
 
-async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text="Здравствуйте!")
+def start(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text="Здравствуйте!")
 
 
-async def echo(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
+def echo(update: Update, context: CallbackContext):
+    context.bot.send_message(chat_id=update.effective_chat.id, text=update.message.text)
 
 
 def main():
     load_dotenv()
     token = os.environ["BOT_TOKEN"]
-    application = ApplicationBuilder().token(token).build()
-
+    updater = Updater(token=token, use_context=True)
+    dispatcher = updater.dispatcher
     start_handler = CommandHandler('start', start)
-    echo_handler = MessageHandler(filters.TEXT & (~filters.COMMAND), echo)
-
-    application.add_handler(start_handler)
-    application.add_handler(echo_handler)
-
-    application.run_polling()
+    echo_handler = MessageHandler(Filters.text & (~Filters.command), echo)
+    dispatcher.add_handler(start_handler)
+    dispatcher.add_handler(echo_handler)
+    updater.start_polling()
 
 
 if __name__ == '__main__':
