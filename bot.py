@@ -42,6 +42,7 @@ if __name__ == '__main__':
     dispatcher.add_handler(echo_handler)
 
     while True:
+        logger.info('Detected_tg_bot started')
         try:
             updater.start_polling()
         except Exception as err:
