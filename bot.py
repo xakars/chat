@@ -41,9 +41,8 @@ if __name__ == '__main__':
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(echo_handler)
 
-    while True:
-        logger.info('Detected_tg_bot started')
-        try:
-            updater.start_polling()
-        except Exception as err:
-            logger.exception(f"Бот упал с ошибкой:\n, {err}")
+    logger.info('Detected_tg_bot started')
+    try:
+        updater.start_polling()
+    except Exception as err:
+        logger.exception(f"Бот упал с ошибкой:\n, {err}")
