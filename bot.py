@@ -9,17 +9,17 @@ def start(update: Update, context: CallbackContext):
 
 
 def chat(update: Update, context: CallbackContext):
-    project_id = os.environ["PROJECT_ID"]
     chat_id = update.effective_chat.id
     text = update.message.text
     language_code = "ru"
-    response = detect_intent_texts(project_id, chat_id, text, language_code)
-    context.bot.send_message(chat_id=update.effective_chat.id, text=response)
+    message = detect_intent_texts(project_id, chat_id, text, language_code)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 
-def main():
+if __name__ == '__main__':
     load_dotenv()
     token = os.environ["BOT_TOKEN"]
+    project_id = os.environ["PROJECT_ID"]
     updater = Updater(token=token, use_context=True)
     dispatcher = updater.dispatcher
     start_handler = CommandHandler('start', start)
@@ -27,7 +27,3 @@ def main():
     dispatcher.add_handler(start_handler)
     dispatcher.add_handler(echo_handler)
     updater.start_polling()
-
-
-if __name__ == '__main__':
-    main()

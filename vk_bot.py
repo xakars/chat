@@ -7,8 +7,9 @@ from dotenv import load_dotenv
 from detect_text import detect_intent_texts
 
 
-def echo(event, vk_api):
-    response = detect_intent_texts(project_id, event.user_id, event.text, "ru")
+def chat(event, vk_api):
+    language_code = "ru"
+    response = detect_intent_texts(project_id, event.user_id, event.text, language_code)
 
     vk_api.messages.send(
         user_id=event.user_id,
@@ -26,4 +27,4 @@ if __name__ == "__main__":
     longpoll = VkLongPoll(vk_session)
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-            echo(event, vk_api)
+            chat(event, vk_api)
