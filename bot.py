@@ -12,7 +12,7 @@ def chat(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     text = update.message.text
     language_code = "ru"
-    message = detect_intent_texts(project_id, chat_id, text, language_code)
+    message = detect_intent_texts(project_id, chat_id, text, language_code).fulfillment_text
     context.bot.send_message(chat_id=update.effective_chat.id, text=message)
 
 

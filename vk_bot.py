@@ -9,11 +9,14 @@ from detect_text import detect_intent_texts
 
 def chat(event, vk_api):
     language_code = "ru"
-    response = detect_intent_texts(project_id, event.user_id, event.text, language_code)
-
+    message = detect_intent_texts(project_id, event.user_id, event.text, language_code)
+    if message.intent.is_fallback:
+        pass
+    else:
+        response = message.fulfillment_text
     vk_api.messages.send(
         user_id=event.user_id,
-        message=response,
+        message=message,
         random_id=random.randint(1,1000)
     )
 
