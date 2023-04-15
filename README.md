@@ -5,6 +5,7 @@
 [telegram_bot](https://t.me/chat_voice_dvmn3423_bot) и [vk_bot](https://vk.com/public219929952)
 
 Пример работы telegram бота:
+
 ![video-to-gif](https://user-images.githubusercontent.com/73193926/232184885-6bc611ea-5b05-437c-9b61-9a23ee93f81d.gif)
 
 
