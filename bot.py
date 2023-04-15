@@ -23,26 +23,27 @@ def chat(update: Update, context: CallbackContext):
 
 
 if __name__ == '__main__':
-    load_dotenv()
-
-    logger.setLevel(logging.INFO)
-    logger_bot_token = os.environ['LOGGER_BOT_TOKEN']
-    logger_bot = telegram.Bot(token=logger_bot_token)
-    admin_chat_id = os.environ["ADMIN_CHAT_ID"]
-    bot_logger_handler = TelegramLogsHandler(logger_bot, admin_chat_id)
-    logger.addHandler(bot_logger_handler)
-
-    token = os.environ["BOT_TOKEN"]
-    project_id = os.environ["PROJECT_ID"]
-    updater = Updater(token=token, use_context=True)
-    dispatcher = updater.dispatcher
-    start_handler = CommandHandler('start', start)
-    echo_handler = MessageHandler(Filters.text & (~Filters.command), chat)
-    dispatcher.add_handler(start_handler)
-    dispatcher.add_handler(echo_handler)
-
-    logger.info('Detected_tg_bot started')
     try:
+        load_dotenv()
+
+        logger.setLevel(logging.INFO)
+        logger_bot_token = os.environ['LOGGER_BOT_TOKEN']
+        logger_bot = telegram.Bot(token=logger_bot_token)
+        admin_chat_id = os.environ["ADMIN_CHAT_ID"]
+        bot_logger_handler = TelegramLogsHandler(logger_bot, admin_chat_id)
+        logger.addHandler(bot_logger_handler)
+
+        token = os.environ["BOT_TOKEN"]
+        project_id = os.environ["PROJECT_ID"]
+        updater = Updater(token=token, use_context=True)
+        dispatcher = updater.dispatcher
+        start_handler = CommandHandler('start', start)
+        echo_handler = MessageHandler(Filters.text & (~Filters.command), chat)
+        dispatcher.add_handler(start_handler)
+        dispatcher.add_handler(echo_handler)
+
+        logger.info('Tg_bot started')
         updater.start_polling()
+
     except Exception as err:
         logger.exception(f"Бот упал с ошибкой:\n, {err}")
