@@ -14,7 +14,7 @@ def start(update: Update, context: CallbackContext):
     context.bot.send_message(chat_id=update.effective_chat.id, text="Здравствуйте!")
 
 
-def chat(update: Update, context: CallbackContext):
+def handle_user_message(update: Update, context: CallbackContext):
     chat_id = update.effective_chat.id
     text = update.message.text
     language_code = "ru"
@@ -38,7 +38,7 @@ if __name__ == '__main__':
         updater = Updater(token=token, use_context=True)
         dispatcher = updater.dispatcher
         start_handler = CommandHandler('start', start)
-        echo_handler = MessageHandler(Filters.text & (~Filters.command), chat)
+        echo_handler = MessageHandler(Filters.text & (~Filters.command), handle_user_message)
         dispatcher.add_handler(start_handler)
         dispatcher.add_handler(echo_handler)
 
