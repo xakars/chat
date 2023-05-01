@@ -2,6 +2,7 @@ from google.cloud import dialogflow
 import json
 import os
 from dotenv import load_dotenv
+import argparse
 
 
 def create_intent(project_id, display_name, training_phrases_parts, message_texts):
@@ -32,9 +33,14 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
 
 load_dotenv()
 project_id = os.environ["PROJECT_ID"]
+parser = argparse.ArgumentParser()
+parser.add_argument('--path', default='training.json', help='path to json file')
+args = parser.parse_args()
+path_to_training_phrases = args.path
 
-with open("training.json", "r") as f:
+with open(path_to_training_phrases, "r") as f:
     intents = json.load(f)
+
 
 for intent in intents:
     questions = intents[intent]["questions"]
