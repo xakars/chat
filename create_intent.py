@@ -31,18 +31,19 @@ def create_intent(project_id, display_name, training_phrases_parts, message_text
     print("Intent created: {}".format(response))
 
 
-load_dotenv()
-project_id = os.environ["PROJECT_ID"]
-parser = argparse.ArgumentParser()
-parser.add_argument('--path', default='training.json', help='path to json file')
-args = parser.parse_args()
-path_to_training_phrases = args.path
+if __name__ == '__main__':
+    load_dotenv()
+    project_id = os.environ["PROJECT_ID"]
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--path', default='training.json', help='path to json file')
+    args = parser.parse_args()
+    path_to_training_phrases = args.path
 
-with open(path_to_training_phrases, "r") as f:
-    intents = json.load(f)
+    with open(path_to_training_phrases, "r") as f:
+        intents = json.load(f)
 
 
-for intent in intents:
-    questions = intents[intent]["questions"]
-    answer = [intents[intent]["answer"]]
-    create_intent(project_id, intent, questions, answer)
+    for intent in intents:
+        questions = intents[intent]["questions"]
+        answer = [intents[intent]["answer"]]
+        create_intent(project_id, intent, questions, answer)
