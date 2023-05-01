@@ -43,7 +43,7 @@ if __name__ == '__main__':
         intents = json.load(f)
 
 
-    for intent in intents:
-        questions = intents[intent]["questions"]
-        answer = [intents[intent]["answer"]]
+    for intent, value in intents.items():
+        questions = value["questions"]
+        answer = value["answer"]
         create_intent(project_id, intent, questions, answer)
