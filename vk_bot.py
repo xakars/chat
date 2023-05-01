@@ -11,7 +11,7 @@ from logger import TelegramLogsHandler
 
 logger = logging.getLogger()
 
-def handle_user_message(event, vk_api):
+def handle_user_message(project_id, event, vk_api):
     language_code = "ru"
     message = detect_intent_texts(project_id, event.user_id, event.text, language_code)
     if message.intent.is_fallback:
@@ -43,6 +43,6 @@ if __name__ == "__main__":
         logger.info('Vk_bot started')
         for event in longpoll.listen():
             if event.type == VkEventType.MESSAGE_NEW and event.to_me:
-                handle_user_message(event, vk_api)
+                handle_user_message(project_id, event, vk_api)
     except Exception as err:
         logger.exception(f"Бот упал с ошибкой:\n, {err}")
